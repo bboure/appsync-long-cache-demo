@@ -1,0 +1,7 @@
+type Query {
+  wikipedia(title: ID!): String!
+}
+
+schema {
+  query: Query
+}

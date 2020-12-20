@@ -1,0 +1,31 @@
+service:
+  name: appsync-long-cache
+
+plugins:
+  - serverless-appsync-plugin
+
+provider:
+  name: aws
+  
+custom:
+  appSync:
+    name: long-cache-demo
+    schema: schema.graphql
+    authenticationType: API_KEY
+    logConfig:
+      level: ALL
+    apiKeys:
+      - name: myApiKey
+        expiresAfter: 1y
+  
+    mappingTemplates:
+      - dataSource: wikipedia
+        type: Query
+        field: wikipedia
+
+    dataSources:
+      - type: HTTP
+        name: wikipedia
+        description: 'Wikipedia api'
+        config:
+          endpoint: https://en.wikipedia.org
