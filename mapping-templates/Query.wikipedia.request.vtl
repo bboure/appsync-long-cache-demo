@@ -1,16 +1,2 @@
-{
-  "version": "2018-05-29",
-  "method": "GET",
-  "params": {
-    "query": {
-        "action": "query",
-        "format": "json",
-        "prop": "extracts",
-        "exintro": "true",
-        "titles": "${ctx.args.title}",
-        "explaintext": "true",
-        "exsentences": 10
-    }
-  },
-  "resourcePath": "/w/api.php"
-}
+$util.qr($ctx.stash.put("title", $ctx.args.title))
+{}

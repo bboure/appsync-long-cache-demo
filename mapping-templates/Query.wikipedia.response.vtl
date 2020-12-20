@@ -1,11 +1,1 @@
-#if($ctx.result.statusCode == 200)
-    #set($body = $utils.parseJson($ctx.result.body))
-    #foreach ($page in $body.query.pages.entrySet())
-        #if ($page.value.title == $ctx.args.title)
-            #return($page.value.extract)
-        #end
-    #end
-    $utils.error("Article not found", "NotFound")
-#else
-    $utils.error($ctx.result.statusCode, "Error")
-#end
+$util.toJson($ctx.result)

@@ -1,0 +1,16 @@
+## Bypass this function if result is present in cache
+#if($ctx.stash.result)
+  #return($ctx.stash.result)
+#end
+#set($expires_at = $util.time.nowEpochMilliSeconds() + 3600 * 24 * 30 * 1000)
+{
+  "version" : "2018-05-29",
+  "operation" : "PutItem",
+  "key" : {
+    "title" : $util.dynamodb.toStringJson(${ctx.stash.title})
+  },
+  "attributeValues": {
+    "expires_at": $util.dynamodb.toNumberJson($expires_at),
+    "content": $util.dynamodb.toStringJson($ctx.prev.result)
+  }
+}

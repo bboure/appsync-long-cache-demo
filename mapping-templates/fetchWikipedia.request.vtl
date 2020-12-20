@@ -1,0 +1,20 @@
+## Bypass this function if result is present in cache
+#if($ctx.stash.result)
+  #return($ctx.stash.result)
+#end
+{
+  "version": "2018-05-29",
+  "method": "GET",
+  "params": {
+    "query": {
+        "action": "query",
+        "format": "json",
+        "prop": "extracts",
+        "exintro": "true",
+        "titles": "${ctx.stash.title}",
+        "explaintext": "true",
+        "exsentences": 10
+    }
+  },
+  "resourcePath": "/w/api.php"
+}

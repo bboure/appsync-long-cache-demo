@@ -10,10 +10,12 @@ provider:
 custom:
   appSync:
     name: long-cache-demo
+    xrayEnabled: true
     schema: schema.graphql
     authenticationType: API_KEY
     logConfig:
       level: ALL
+
     apiKeys:
       - name: myApiKey
         expiresAfter: 1y
@@ -22,6 +24,11 @@ custom:
       - dataSource: wikipedia
         type: Query
         field: wikipedia
+        kind: PIPELINE
+        functions:
+          - fetchFromCache
+          - fetchWikipedia
+          - saveToCache
 
     dataSources:
       - type: HTTP
@@ -29,3 +36,32 @@ custom:
         description: 'Wikipedia api'
         config:
           endpoint: https://en.wikipedia.org
+      
+      - type: AMAZON_DYNAMODB
+        name: wikicache
+        description: 'Wikipedia cached titles'
+        config:
+          tableName:
+            Ref: WikipediaTable
+
+    functionConfigurations:
+      - dataSource: wikicache
+        name: fetchFromCache
+      - dataSource: wikicache
+        name: saveToCache
+      - dataSource: wikipedia
+        name: fetchWikipedia
+
+resources:
+  Resources:
+    WikipediaTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: wikipedia
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: title
+            AttributeType: S
+        KeySchema:
+          - AttributeName: title
+            KeyType: HASH
