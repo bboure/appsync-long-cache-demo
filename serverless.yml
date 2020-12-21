@@ -21,8 +21,7 @@ custom:
         expiresAfter: 1y
   
     mappingTemplates:
-      - dataSource: wikipedia
-        type: Query
+      - type: Query
         field: wikipedia
         kind: PIPELINE
         functions:
