@@ -1,7 +1,7 @@
 #if($ctx.error)
   $util.error($ctx.error.message, $ctx.error.type)
 #end
-#if($ctx.result && $util.time.nowEpochMilliSeconds() <= $ctx.result.expires_at)
+#if($ctx.result)
   $util.qr($ctx.stash.put("result", $ctx.result.content))
 #end
 {}

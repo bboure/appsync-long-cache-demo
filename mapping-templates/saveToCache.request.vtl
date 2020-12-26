@@ -2,7 +2,7 @@
 #if($ctx.stash.result)
   #return($ctx.stash.result)
 #end
-#set($expires_at = $util.time.nowEpochMilliSeconds() + 3600 * 24 * 30 * 1000)
+#set($expires_at = $util.time.nowEpochSeconds() + 3600 * 24 * 30)
 {
   "version" : "2018-05-29",
   "operation" : "PutItem",
